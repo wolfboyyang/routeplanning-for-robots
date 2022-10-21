@@ -2,9 +2,11 @@
 
 Autonomous robots move through industrial halls on Earth and on the surface of distant planets without human intervention. A path planning algorithm calculates the shortest route to the desired destination. 
 
-The original project is issued on [Make Magazin](make-magazin.de/xb4a) 2021/1, Page 78.
-Article: [Pfadplanung für Roboter](https://www.heise.de/select/make/2021/1/2031114325889691579)
-Code Repo: [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
+- Original project: [Make Magazin 2021/1, Page 78.](make-magazin.de/xb4a) 
+
+- Article: [Pfadplanung für Roboter](https://www.heise.de/select/make/2021/1/2031114325889691579)
+
+- Code Repo: [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
 
 In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.
 
@@ -51,23 +53,24 @@ Path planning: The terrace is divided into tiles.
 Table and chairs are the obstacles to be bypassed.
 
 ## Mission
+![](images/mission.jpeg)
 Our mission area (the terrace) is 10 fields wide and 7 fields high. Each individual field is 40cm × 40cm in size. The field size is based on the size of the robot plus a margin around the robot. The size of the mission area depends on the specific task. The operator, i.e. you, determines the size itself.
 
 Some of the fields play a special role: Exactly one field is the starting field (green), and exactly another field is the target field (red). The operator determines in the program which they are. In addition, the operator can mark fields as known obstacles (brown). The robot is not allowed to drive through this, as there is a risk of collision there. He has to drive around her. In the example, this is the area where the chairs and the table are on the terrace.
 
 Path planning now has the task of planning the shortest possible path between the start and finish field, bypassing the known obstacles. On the previous page, the planned path is marked in blue color between the start and destination field. The algorithm has earmarked the yellow fields for a possible rescheduling, but has not been treated definitively, as the shortest path runs in a different direction, as you will see later.
 ## Neighboring fields
-
+![](images/neighbour.webp)
 ## System structure
-
+![](images/system_structures.webp)
 ## Interactive D*Lite
 
 ## Bluetooth interface
 
 ## Programming
-
+![](images/simulator.webp)
 ## Robot programming
-
+![](images/robot_program.webp)
 ## Installation and test
 
 ## Expansion possibilities
