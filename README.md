@@ -1,5 +1,5 @@
 # Routeplanning for robots
-
+![](images/logo.webp)
 Autonomous robots move through industrial halls on Earth and on the surface of distant planets without human intervention. A path planning algorithm calculates the shortest route to the desired destination. 
 
 - Original project: [Make Magazin 2021/1, Page 78.](make-magazin.de/xb4a) 
