@@ -17,6 +17,20 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
 1. Adjust the routeplaning program for the new robot.
 1. Try [Snap4Arduino](https://snap4arduino.rocks/)
 
+# Progress
+- week 41: Find interesting project
+    1. TonUINO
+    2. Solar electricity for microcontroller
+    3. ESP data transmission
+    4. Walkie-talkie
+    5. *Routeplanning for robots*❤️
+- week 42: Shop boards/sensors/tools, Check Repo Code/Simulation (Done, on Mac)
+- week 43: Check the robot programming
+    1. [EV3 Brick Magic tool](https://afarago.github.io/EV3TreeVisualizerPages/) by Attila Farag, was created for connecting the EV3 Brick with the magical unicorns over USB or Bluetooth connection over the standard LEGO firmware. It contains an [online version on Azure](https://ev3treevis.azurewebsites.net) to visualize the old Ev3 Lab project. For Mindstorms App 51515, SPIKE Prime and Essentials and EV3Classroom, you could try his [Lego App Tools on Azure](https://legoapptools.azurewebsites.net/). There's blog described how he hacks the app logic: [Experiments with the SPIKE App Debug Mode](https://digitalbrick.home.blog/2021/09/20/experiments-with-the-spike-advanced-mode-debug-mode/)
+    1. [Ev3dev](https://www.ev3dev.org), is a Debian Linux-based operating system that runs on several LEGO® MINDSTORMS compatible platforms including the LEGO® MINDSTORMS EV3 and Raspberry Pi-powered BrickPi. Ev3dev supports many popular scripting languages out-of-the-box, so you can get started right away with your favorite language and libraries.
+    1. [ESP-32 based LEGO SPIKE simulator in Micropython environment](https://github.com/rundhall/ESP-LEGO-SPIKE-Simulator), with [YouTube video](https://youtu.be/OVu2Ycx_PgU)
+    1. [miro-ROS](https://micro.ros.org), puts ROS 2 onto microcontrollers.  
+
 ## Brief information
 - Understand and apply interactive path planning
 - Raspberry Pi/Mac/phone controls robots via Bluetooth
@@ -69,8 +83,24 @@ Path planning now has the task of planning the shortest possible path between th
 
 ## Programming
 ![](images/simulator.webp)
+
+1. Launch the Simulator
+```
+git clone https://github.com/robodhhb/Interactive-D-Star-Lite.git
+cd Interactive-D-Star-Lite\20_Raspberry_Pi_project
+conda create -n ssrdp python=3.10
+conda activate ssrdp
+python DStarLiteMain.py
+```
+1. In `Design` tab, Change the grid width & height, press `Generate Grid`, change `Click mode` to put Start/Goal point or set Obstales by clicking the map zone.
+1. In `Planing` tab, change `Planning mode` Fast/Slow/Manual, click `Start Planning` to get a routine. `only direct neighbors` means only move up/down/left/right, otherwise the robot could move diagonally.
+1. In `Execution` tab, change `Robot start orientation` to match the robot, click `Execution plan` to see the simulation or send commands to robot.
+
 ## Robot programming
+Overview
 ![](images/robot_program.webp)
+Main Logic - Text
+![](images/robot_program_main.webp)
 ## Installation and test
 
 ## Expansion possibilities
