@@ -1,5 +1,6 @@
 # Routeplanning for robots
-![](images/logo.webp)
+<img src="images/logo.webp" width="480">
+
 Autonomous robots move through industrial halls on Earth and on the surface of distant planets without human intervention. A path planning algorithm calculates the shortest route to the desired destination. 
 
 - Original project: [Make Magazin 2021/1, Page 78.](make-magazin.de/xb4a) 
@@ -12,7 +13,7 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
 
 # Steps: 
 - [ ] Analyze Botley 2.0 controller & sensors
-- [*] Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
+- [x] Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
 - [ ] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal.
 - [ ] Adjust the routeplaning program for the new robot.
 - [ ] Try [Snap4Arduino](https://snap4arduino.rocks/)
@@ -31,13 +32,24 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     1. [miro-ROS](https://micro.ros.org), puts ROS 2 onto microcontrollers.  
 - week 43 (26.10.2022 - 01.11.2022): Check the robot programming
     1. Disassemble Botley robot
-    ![](images/botley_disassembly.webp)
-    main board
-    ![](images/botley_main_board.webp)
-    sensor board for Motor Encoder & obstacle detection
-    ![](images/botley_sensor_board.webp)
-    Motor with Counter Grating
-    ![](images/botley_servo.webp)
+
+        <img src="images/botley_disassembly.webp" width="480">
+    
+        main board
+
+        <img src="images/botley_main_board.webp" width="480">
+    
+    
+        sensor board for Motor Encoder & obstacle detection
+
+        <img src="images/botley_sensor_board.webp" width="240">
+
+    
+    
+        Motor with Counter Grating
+
+        <img src="images/botley_motor.webp" width="240">
+
     1. Test [ESP-C3-32S/M5Stamp-C3](https://www.waveshare.com/wiki/ESP-C3-32S-Kit) Boards: flash MicroPython, run example code.
 - week 43 (02.11.2022 - 08.11.2022):
 
@@ -85,7 +97,7 @@ Some of the fields play a special role: Exactly one field is the starting field 
 
 Path planning now has the task of planning the shortest possible path between the start and finish field, bypassing the known obstacles. On the previous page, the planned path is marked in blue color between the start and destination field. The algorithm has earmarked the yellow fields for a possible rescheduling, but has not been treated definitively, as the shortest path runs in a different direction, as you will see later.
 ## Neighboring fields
-![](images/neighbour.webp)
+![](images/neighbour.webp =x250)
 ## System structure
 ![](images/system_structures.webp)
 ## Interactive D*Lite
