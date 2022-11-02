@@ -11,25 +11,36 @@ Autonomous robots move through industrial halls on Earth and on the surface of d
 In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.
 
 # Steps: 
-1. Analyze Botley 2.0 controller & sensors
-1. Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
-1. Modify the hardwares and Test
-1. Adjust the routeplaning program for the new robot.
-1. Try [Snap4Arduino](https://snap4arduino.rocks/)
+- [ ] Analyze Botley 2.0 controller & sensors
+- [*] Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
+- [ ] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal.
+- [ ] Adjust the routeplaning program for the new robot.
+- [ ] Try [Snap4Arduino](https://snap4arduino.rocks/)
 
 # Progress
-- week 41: Find interesting project
+- week 41 (12.10.2022 - 18.10.2022): Find interesting project
     1. TonUINO
     2. Solar electricity for microcontroller
     3. ESP data transmission
     4. Walkie-talkie
     5. *Routeplanning for robots*❤️
-- week 42: Shop boards/sensors/tools, Check Repo Code/Simulation (Done, on Mac)
-- week 43: Check the robot programming
+- week 42 (19.10.2022 - 25.10.2022): Shop boards/sensors/tools, Check Repo Code/Simulation (Done, on Mac), found some tools/repo may help.
     1. [EV3 Brick Magic tool](https://afarago.github.io/EV3TreeVisualizerPages/) by Attila Farag, was created for connecting the EV3 Brick with the magical unicorns over USB or Bluetooth connection over the standard LEGO firmware. It contains an [online version on Azure](https://ev3treevis.azurewebsites.net) to visualize the old Ev3 Lab project. For Mindstorms App 51515, SPIKE Prime and Essentials and EV3Classroom, you could try his [Lego App Tools on Azure](https://legoapptools.azurewebsites.net/). There's blog described how he hacks the app logic: [Experiments with the SPIKE App Debug Mode](https://digitalbrick.home.blog/2021/09/20/experiments-with-the-spike-advanced-mode-debug-mode/)
     1. [Ev3dev](https://www.ev3dev.org), is a Debian Linux-based operating system that runs on several LEGO® MINDSTORMS compatible platforms including the LEGO® MINDSTORMS EV3 and Raspberry Pi-powered BrickPi. Ev3dev supports many popular scripting languages out-of-the-box, so you can get started right away with your favorite language and libraries.
     1. [ESP-32 based LEGO SPIKE simulator in Micropython environment](https://github.com/rundhall/ESP-LEGO-SPIKE-Simulator), with [YouTube video](https://youtu.be/OVu2Ycx_PgU)
     1. [miro-ROS](https://micro.ros.org), puts ROS 2 onto microcontrollers.  
+- week 43 (26.10.2022 - 01.11.2022): Check the robot programming
+    1. Disassemble Botley robot
+    ![](images/botley_disassembly.webp)
+    main board
+    ![](images/botley_main_board.webp)
+    sensor board for Motor Encoder & obstacle detection
+    ![](images/botley_sensor_board.webp)
+    Motor with Counter Grating
+    ![](images/botley_servo.webp)
+    1. Test [ESP-C3-32S/M5Stamp-C3](https://www.waveshare.com/wiki/ESP-C3-32S-Kit) Boards: flash MicroPython, run example code.
+- week 43 (02.11.2022 - 08.11.2022):
+
 
 ## Brief information
 - Understand and apply interactive path planning
