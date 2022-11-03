@@ -42,13 +42,14 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
         The two motor could be controlled by the
         [TRA9118A Motor Driver](http://www.chipsourcetek.com/DataSheet/TRA9118A.pdf)
 
-        |F00| F01| F02 | F03| Mode|
-        |---|---|---|---|---|---|
-        | L |  L |  L  |  L |stand|
-        | H |  L |  H  |  L |forward|
-        | L |  H |  L  |  H |backward|
-        | H |  L |  L  |  H |turn left|
-        | L |  H |  H  |  L |turn right|
+        | F00 | F01 | F02 | F03 | Mode |
+        |:---:|:---:|:---:|:---:| :---  |
+        |  L  |  L  |  L  |  L  | still |
+        |  H  |  L  |  H  |  L  | forward |
+        |  L  |  H  |  L  |  H  | backward |
+        |  H  |  L  |  L  |  H  | turn left |
+        |  L  |  H  |  H  |  L  | turn right |
+
 
     
         sensor board for Motor Encoder & obstacle detection
