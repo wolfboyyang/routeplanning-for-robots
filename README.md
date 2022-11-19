@@ -45,11 +45,10 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
         | F00 | F01 | F02 | F03 | Mode |
         |:---:|:---:|:---:|:---:| :---  |
         |  L  |  L  |  L  |  L  | still |
-        |  H  |  L  |  H  |  L  | forward |
-        |  L  |  H  |  L  |  H  | backward |
-        |  H  |  L  |  L  |  H  | turn left |
-        |  L  |  H  |  H  |  L  | turn right |
-
+        |  L  |  H  |  L  |  H  | forward |
+        |  H  |  L  |  H  |  L  | backward  |
+        |  L  |  H  |  H  |  L  | turn left |
+        |  H  |  L  |  L  |  H  | turn right |
 
     
         sensor board for Motor Encoder & obstacle detection
@@ -64,6 +63,15 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
 
     1. Test [ESP-C3-32S/M5Stamp-C3](https://www.waveshare.com/wiki/ESP-C3-32S-Kit) Boards: flash MicroPython, run example code.
 - week 43 (02.11.2022 - 08.11.2022):
+    1. quick overview the basics of python/micropython
+    1. try rust for esp-c3
+- week 44 (09.11.2022 - 15.11.2022):
+    1. solder the F00,F01,F02,F03 to control the moter
+    <img src="images/soldering_the_board.webp" width="480">
+    1. program to test the movement: move forward/back, turn left/right
+    1. remember to connect GND with the board
+- week 45 (16.11.2022 - 22.11.2022):
+    1. try to figure out the obstacle detection function.
 
 
 ## Brief information
