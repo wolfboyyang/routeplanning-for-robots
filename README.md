@@ -36,11 +36,11 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
 - week 43 (26.10.2022 - 01.11.2022): Check the robot programming
     1. Disassemble Botley robot
 
-        <img src="images/botley_disassembly.webp" width="480">
+        <img src="images/botley_disassembly.webp" width="240">
     
         main board
 
-        <img src="images/botley_main_board.webp" width="480">
+        <img src="images/botley_main_board.webp" width="240">
 
         The two motor could be controlled by the
         [TRA9118A Motor Driver](http://www.chipsourcetek.com/DataSheet/TRA9118A.pdf)
@@ -56,13 +56,13 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     
         sensor board for Motor Encoder & obstacle detection
 
-        <img src="images/botley_sensor_board.webp" width="240">
+        <img src="images/botley_sensor_board.webp" width="120">
 
     
     
         Motor with Counter Grating
 
-        <img src="images/botley_motor.webp" width="240">
+        <img src="images/botley_motor.webp" width="120">
 
     1. Test [ESP-C3-32S/M5Stamp-C3](https://www.waveshare.com/wiki/ESP-C3-32S-Kit) Boards: flash MicroPython, run example code.
 
@@ -73,7 +73,7 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
 - week 44 (09.11.2022 - 15.11.2022):
     1. solder the F00,F01,F02,F03 to control the moter
 
-        <img src="images/soldering_the_board.webp" width="480">
+        <img src="images/soldering_the_board.webp" width="240">
 
     1. program to test the movement: move forward/back, turn left/right
     1. remember to connect GND with the board
@@ -121,7 +121,9 @@ Path planning: The terrace is divided into tiles.
 Table and chairs are the obstacles to be bypassed.
 
 ## Mission
-![](images/mission.jpeg)
+
+<img src="images/mission.jpeg" width="480">
+
 Our mission area (the terrace) is 10 fields wide and 7 fields high. Each individual field is 40cm × 40cm in size. The field size is based on the size of the robot plus a margin around the robot. The size of the mission area depends on the specific task. The operator, i.e. you, determines the size itself.
 
 Some of the fields play a special role: Exactly one field is the starting field (green), and exactly another field is the target field (red). The operator determines in the program which they are. In addition, the operator can mark fields as known obstacles (brown). The robot is not allowed to drive through this, as there is a risk of collision there. He has to drive around her. In the example, this is the area where the chairs and the table are on the terrace.
@@ -129,11 +131,11 @@ Some of the fields play a special role: Exactly one field is the starting field 
 Path planning now has the task of planning the shortest possible path between the start and finish field, bypassing the known obstacles. On the previous page, the planned path is marked in blue color between the start and destination field. The algorithm has earmarked the yellow fields for a possible rescheduling, but has not been treated definitively, as the shortest path runs in a different direction, as you will see later.
 ## Neighboring fields
 
-    <img src="images/neighbour.webp" width="240">
+<img src="images/neighbour.webp" width="240">
 
 ## System structure
 
-    <img src="images/system_structures.webp" width="480">
+<img src="images/system_structures.webp" width="480">
 
 ## Interactive D*Lite
 
@@ -141,8 +143,7 @@ Path planning now has the task of planning the shortest possible path between th
 
 ## Programming
 
-    <img src="images/simulator.webp" width="480">
-
+<img src="images/simulator.webp" width="480">
 
 1. Launch the Simulator
 
@@ -160,11 +161,11 @@ Path planning now has the task of planning the shortest possible path between th
 ## Robot programming
     1. Overview
 
-        <img src="images/robot_program.webp" width="480">
+<img src="images/robot_program.webp" width="480">
 
     2. Main Logic - Text
 
-        <img src="images/robot_program_main.webp" width="480">
+<img src="images/robot_program_main.webp" width="480">
 
 ## Installation and test
 
