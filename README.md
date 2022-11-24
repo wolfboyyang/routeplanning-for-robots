@@ -80,9 +80,19 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
 
 - week 45 (16.11.2022 - 22.11.2022):
     1. try to figure out the obstacle detection function.
-    1. look into [mBot2](https://education.makeblock.com/mbot2/) from Makeblock for the project, which contains an esp32 controller and could program in micropython directly, as Botley maybe a bit tricky to get it working with obstable detection. Then I will focus on the communication between robot and pc first.
+    1. look into [mBot2](https://education.makeblock.com/mbot2/) from Makeblock for the project, which contains an esp32 controller and could program in micropython directly, as Botley maybe a bit tricky to get it working with obstable detection.
 
         <img src="images/mbot2.webp" width="480">
+
+    1. Try [Toit](https://docs.toit.io/) which has similar syntax as micropython but much faster and support OTA. Only support ESP32 for now.
+
+    1. Assembled mbot2 and tried the mBlock IDE for programming.
+
+- week 46 (23.11.2022 - 29.11.2022):
+    1. Inspired by [M1-2 mBot2 and MQTT.pptx by putdejudomthai](https://github.com/putdejudomthai/halocode_and_mbot2_intro), test MQTT with mBot2. I noticed the [cyberpi buildin mqtt lib](https://github.com/Makeblock-official/micropython-api-doc/blob/master/codey%26rocky/Third-party-libraries/simple_mqtt.py) is the same with [umqtt.simple](https://github.com/RuiSantosdotme/ESP-MicroPython/blob/master/code/MQTT/umqttsimple.py)
+
+    1. Check DStarLite Code.
+
 
 
 ## Brief information
