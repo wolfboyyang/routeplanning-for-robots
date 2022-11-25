@@ -6,7 +6,7 @@
 # empty then the first element (index=0) has the
 # smallest key-value of all elements.
 #
-# File: priorityQueue.py
+# File: priority_queue.py
 # Author: Detlef Heinze 
 # Version: 1.0    Date: 22.07.2020       
 ###########################################################

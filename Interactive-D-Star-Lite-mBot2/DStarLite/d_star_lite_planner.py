@@ -6,7 +6,7 @@
 # two-dimensional grid of vertices (Class Vertex) with
 # additional support for an interactive view.
 #
-# File: DStarLitePlanner.py
+# File: d_star_lite_planner.py
 # Author: Detlef Heinze 
 # Version: 1.1    Date: 05.06.2020       
 ###########################################################
@@ -14,8 +14,8 @@
 import platform as pf  # Used for check if program runs on
 import time
 
-from priorityQueue import PriorityQueue
-from screenExecutor import ScreenExecutor
+from priority_queue import PriorityQueue
+from screen_executor import ScreenExecutor
 # Windows or on Raspbian (Linux)
 import vertex as vertex
 

@@ -6,7 +6,7 @@
 # the interactive design of the terrain with start-, goalnode
 # and obstacles and the pathplanning and path execution. 
 #
-# File: DStarLiteView.py
+# File: d_star_lite_view.py
 # Author: Detlef Heinze 
 # Version: 1.1    Date: 22.07.2020       
 ###########################################################
@@ -16,7 +16,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 
-from DStarLitePlanner import *
+from d_star_lite_planner import *
 
 
 # Possible states of the application

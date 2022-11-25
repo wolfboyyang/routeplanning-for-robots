@@ -7,7 +7,7 @@
 # changes in the direction are simulated (N, E, S, W) and
 # (SW, SE, NW, NE).
 # 
-# File: screenExecutor.py
+# File: screen_executor.py
 # Author: Detlef Heinze 
 # Version: 1.1    Date: 22.07.2020       
 ###########################################################
@@ -256,8 +256,8 @@ class ScreenExecutor(object):
 
         polygon_north_east = self.view.canvas_grid.create_polygon(30, 0, 0, 24, 18, 33, fill='blue', state='hidden')
         self.robotIconsIDs['NorthEast'] = polygon_north_east
-        polygon_north_eest = self.view.canvas_grid.create_polygon(0, 0, 30, 24, 14, 33, fill='blue', state='hidden')
-        self.robotIconsIDs['NorthWest'] = polygon_north_eest
+        polygon_north_west = self.view.canvas_grid.create_polygon(0, 0, 30, 24, 14, 33, fill='blue', state='hidden')
+        self.robotIconsIDs['NorthWest'] = polygon_north_west
         polygon_south_west = self.view.canvas_grid.create_polygon(0, 30, 18, 0, 30, 16, fill='blue', state='hidden')
         self.robotIconsIDs['SouthWest'] = polygon_south_west
         polygon_south_east = self.view.canvas_grid.create_polygon(30, 30, 12, 0, 0, 16, fill='blue', state='hidden')

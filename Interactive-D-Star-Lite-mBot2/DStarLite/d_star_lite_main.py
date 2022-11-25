@@ -6,12 +6,12 @@
 # grid including obstacles, a planner and execution
 # modules for screen simulation and Lego EV3 control. 
 #
-# File: DStarLiteMain.py
+# File: d_star_lite_main.py
 # Author: Detlef Heinze 
 # Version: 1.0     Date: 22.07.2020      
 ###########################################################
 
-from DStarLiteView import *
+from d_star_lite_view import *
 
 
 # Create a start main application window
