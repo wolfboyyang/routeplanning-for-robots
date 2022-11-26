@@ -126,7 +126,7 @@ class ScreenExecutor(object):
         return new_orientation
 
     # Orient the robot to the next vertex.
-    # Return True if action was successfull.
+    # Return True if action was successful.
     # Return also a string describing the situation.
     def orient_robot_to(self, next_vertex):
         print('\nOrient robot to next vertex', next_vertex.x, next_vertex.y)
@@ -174,7 +174,7 @@ class ScreenExecutor(object):
     # cannot be  established.
     # Return also a string describing the situation
     def connect_real_robot(self):
-        # The screenExecutor allways has a connection
+        # The screenExecutor always has a connection
         return True, ''
 
     # Has to be overwritten in subclasses controlling real

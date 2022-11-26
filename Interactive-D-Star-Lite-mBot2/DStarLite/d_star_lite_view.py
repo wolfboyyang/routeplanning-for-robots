@@ -3,8 +3,8 @@
 # Class DStarLiteView
 # The class DStarLiteView implements an interactive view
 # for the vertexGrid of the D*Lite algorithm. It implements
-# the interactive design of the terrain with start-, goalnode
-# and obstacles and the pathplanning and path execution. 
+# the interactive design of the terrain with start-, goal-node
+# and obstacles and the path-planning and path execution.
 #
 # File: d_star_lite_view.py
 # Author: Detlef Heinze 
@@ -113,7 +113,7 @@ class DStarLiteView(object):
         # tab control: execTab
         self.lblExecMode = Label(self.execTab, text="Execution mode:")
         self.lblExecMode.grid(column=0, row=0, sticky=W)
-        self.cbExecMode = ttk.Combobox(self.execTab, state="readonly", values=('Screen Simulation', 'Lego EV3 Control'),
+        self.cbExecMode = ttk.Combobox(self.execTab, state="readonly", values=('Screen Simulation', 'Cloud Control'),
                                        width=18)
         self.cbExecMode.current(0)
         self.cbExecMode.grid(column=1, row=0, pady=5, padx=0, sticky=W)
@@ -230,7 +230,7 @@ class DStarLiteView(object):
             return False, 0, 0, current
 
     # Handle the click-event in the canvas if appState is inDesing or inExecution
-    def canv_clicked(self, event):
+    def canvas_clicked(self, event):
         print("clicked at", event.x, event.y)
         if (self.appState == AppState.inDesign or self.appState == AppState.inExecution) and \
                 self.canvas_grid.find_withtag(CURRENT):
@@ -280,7 +280,8 @@ class DStarLiteView(object):
         else:
             self.show('Action not possible in this state of planning. Recreate grid.')
 
-    def show(self, message):
+    @staticmethod
+    def show(message):
         messagebox.showinfo('Hint', message)
 
     # Functions ############################################################
@@ -296,7 +297,7 @@ class DStarLiteView(object):
                                         direct_neighbors=self.directNeighbors.get())
         horizon_shift = 30
         self.canvas_grid = Canvas(self.master, height=800, width=600 + horizon_shift)
-        self.canvas_grid.bind("<Button-1>", self.canv_clicked)
+        self.canvas_grid.bind("<Button-1>", self.canvas_clicked)
         self.canvas_grid.grid(column=0, row=2, pady=10, padx=10, columnspan=6, sticky=W)
         self.draw_planning_grid(horizon_shift)
 

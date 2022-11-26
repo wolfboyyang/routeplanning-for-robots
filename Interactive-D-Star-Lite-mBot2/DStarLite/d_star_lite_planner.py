@@ -17,10 +17,9 @@ import time
 from priority_queue import PriorityQueue
 from screen_executor import ScreenExecutor
 # Windows or on Raspbian (Linux)
-import vertex as vertex
+from vertex import Vertex
+from cloud_executor import CloudExecutor
 
-
-# import ev3_executer as ev3e
 
 class DStarLitePlanner(object):
 
@@ -33,7 +32,7 @@ class DStarLitePlanner(object):
         self.width = grid_width
         self.height = grid_height
         self.directNeighbors = direct_neighbors  # false=8, true=4
-        self.vertexGrid = [[vertex.Vertex(x, y) for y in range(grid_height)] for x in range(grid_width)]
+        self.vertexGrid = [[Vertex(x, y) for y in range(grid_height)] for x in range(grid_width)]
         print("Creating vertex grid with height:", grid_height, "and width:", grid_width, "\n")
         self.startCoordinates = [float('inf'), float('inf')]
         self.goalCoordinates = [float('inf'), float('inf')]
@@ -79,16 +78,10 @@ class DStarLitePlanner(object):
             result = self.executor.execute_plan()
             return result
         # TODO: implement for mbot2
-        elif exec_mode_str == 'Lego EV3 Control':
-            if pf.system() == 'Windows':
-                return False, 'Lego EV3 Control is not supported on Windows: Use Raspbian (Raspberry Pi)'
-            elif pf.system() == 'Linux':
-                pass
-                # TODO: implement for windows/linux/mac
-                # self.executer= ev3e.EV3_Executer(self.view, self)
-                # result= self.executer.executePlan()
-                # return result[0], result[1]
-            return False, "Not yet implemented"
+        elif exec_mode_str == 'Cloud Control':
+            self.executor = CloudExecutor(self.view, self)
+            result = self.executor.execute_plan()
+            return result
 
     # #### D* Lite Algorithm #############################################################
 

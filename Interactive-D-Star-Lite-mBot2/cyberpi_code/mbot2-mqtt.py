@@ -5,68 +5,93 @@ import mbuild
 import time
 from mqtt import MQTTClient
 
-MQTT_HOST = "broker.hivemq.com"
-MQTT_PORT = 1883
+mqtt_host = "broker.hivemq.com"
+mqtt_port = 1883
 
 # Fill in as you like
-client_id = "clientId-wei-mbot2"
+client_id = "clientId-rwth-ssrdp-mbot2"
 
 # Example Path
-TopicSub = "ssrdp/wei/COMMAND"
-TopicPub = "ssrdp/wei/signalfromrobot"
-TopicPubDebug = "ssrdp/wei/debug"
-
-command = ''
+topic_sub = "rwth-ssrdp/route-planning/command"
+topic_pub_result = "rwth-ssrdp/route-planning/result"
+topic_pub_obstacle = "rwth-ssrdp/route-planning/obstacle"
+topic_pub_heartbeat = "rwth-ssrdp/route-planning/heartbeat"
+command = None
 
 
 # Connect to the MQTT server
 def on_mqtt_connect():
     cyberpi.display.show_label('Connecting to MQTT', 16, "center", index=0)
-    mqttClient.connect(clean_session=True)
+    mqtt_client.connect(clean_session=True)
     time.sleep(3)
     cyberpi.display.show_label('Connected to MQTT', 16, "center", index=0)
 
 
 # publish a message
 def on_publish(topic, payload, retain=False, qos=1):
-    mqttClient.publish(topic, payload, retain, qos)
+    mqtt_client.publish(topic, payload, retain, qos)
 
 
 # message processing function
 def on_message_come(topic, msg):
-    print(topic + " " + ":" + str(msg))
     global command
-    if str(topic).find(TopicSub) > 0:
-        command = str(msg)[1:]
-        print('Received', command)
+    print(topic + " :" + str(msg))
+    command = msg
     cyberpi.display.show_label(msg, 16, "center", index=0)
 
 
 # subscribe message
 def on_subscribe():
-    mqttClient.set_callback(on_message_come)
-    mqttClient.subscribe(TopicSub, qos=1)
+    mqtt_client.set_callback(on_message_come)
+    mqtt_client.subscribe(topic_sub, qos=1)
 
 
-mqttClient = MQTTClient(client_id, MQTT_HOST, port=MQTT_PORT, keepalive=600, ssl=False)
+mqtt_client = MQTTClient(client_id, mqtt_host, port=mqtt_port, keepalive=600, ssl=False)
+
+
+def process_command():
+    global command
+    if command is None:
+        return
+    else:
+        if command == b'Drive':
+            print('Forward')
+            cyberpi.display.show_label('Forward', 16, "center", index=0)
+            mbot2.straight(20)
+        elif command == b'Reverse':
+            print('Backward')
+            cyberpi.display.show_label('Backward', 16, "center", index=0)
+            mbot2.straight(-20)
+        elif command == b'TurnR90':
+            mbot2.turn(90)
+        elif command == b'TurnL90':
+            mbot2.turn(-90)
+        elif command == b'Turn180':
+            mbot2.turn(180)
+        elif command == b'CheckDistance':
+            distance = mbuild.ultrasonic2.get(1)
+            on_publish(topic_pub_obstacle, str(distance), retain=False, qos=1)
+        elif command == b'Stop':
+            mbot2.EM_stop("ALL")
+        command = None
 
 
 @event.start
 def on_start():
     count = 0
-    is_connected_mqtt = 0
+    mqtt_connected = False
 
     while True:
         if cyberpi.wifi.is_connected():
             cyberpi.led.show('green black black black green')
-            if is_connected_mqtt == 0:
+            if not mqtt_connected:
                 on_mqtt_connect()
-                is_connected_mqtt = 1
+                mqtt_connected = True
                 on_subscribe()
                 time.sleep(2)
             else:
                 count = count + 1
-                on_publish(TopicPub, 'count ' + str(count), retain=False, qos=1)
+                on_publish(topic_pub_heartbeat, str(count), retain=False, qos=1)
                 cyberpi.display.show_label(count, 16, "bottom_mid", index=1)
                 time.sleep(5)
         else:
@@ -78,31 +103,18 @@ def on_start():
 
 @event.is_press('b')
 def is_btn_press():
-    cyberpi.display.show_label('Press B ' + str(cyberpi.controller.get_count('b')), 16, "top_mid", index=2)
-    on_publish(TopicPubDebug, 'Press B ' + str(cyberpi.controller.get_count('b')), retain=False, qos=1)
+    distance = mbuild.ultrasonic2.get(1)
+    cyberpi.display.show_label('Obstacle ' + str(distance), 16, "top_mid", index=2)
+    on_publish(topic_pub_obstacle, str(distance), retain=False, qos=1)
 
 
-@event.greater_than(1, "timer")
+@event.greater_than(0.5, "timer")
 def on_compare_than():
-    global command
-
-    if mbuild.ultrasonic2.get(1) < 10:
+    distance = mbuild.ultrasonic2.get(1)
+    if distance < 10:
         mbuild.ultrasonic2.play("thinking", 1)
     else:
         mbuild.ultrasonic2.play("happy", 1)
-
-    if command != '':
-        if command.find('F') > 0:
-            print('Forward')
-            cyberpi.display.show_label('Forward', 16, "center", index=0)
-            mbot2.straight(10)
-        elif command.find('B') > 0:
-            print('Backward')
-            cyberpi.display.show_label('Backward', 16, "center", index=0)
-            mbot2.straight(-10)
-        elif command.find('R') > 0:
-            mbot2.turn(90)
-        elif command.find('L') > 0:
-            mbot2.turn(-90)
-        command = ''
+    on_publish(topic_pub_obstacle, str(distance), retain=False, qos=1)
+    process_command()
     cyberpi.timer.reset()

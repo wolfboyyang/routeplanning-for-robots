@@ -92,6 +92,15 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     1. Inspired by [M1-2 mBot2 and MQTT.pptx by putdejudomthai](https://github.com/putdejudomthai/halocode_and_mbot2_intro), test MQTT with mBot2. I noticed the [cyberpi buildin mqtt lib](https://github.com/Makeblock-official/micropython-api-doc/blob/master/codey%26rocky/Third-party-libraries/simple_mqtt.py) is the same with [umqtt.simple](https://github.com/RuiSantosdotme/ESP-MicroPython/blob/master/code/MQTT/umqttsimple.py)
 
     1. Check DStarLite Code.
+    1. MQTT message:
+    
+    - instruction topic: rwth-ssrdp/route-planning/command
+
+        Drive, Stop, TurnL90, TurnR90, Turn180, CheckDistance
+    
+    - feedback topic: rwth-ssrdp/route-planning/result
+    - obstacle distance: rwth-ssrdp/route-planning/obstacle
+    - alive: rwth-ssrdp/route-planning/heartbeat
 
 
 
