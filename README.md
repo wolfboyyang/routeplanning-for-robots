@@ -94,13 +94,15 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     1. Check DStarLite Code.
     1. MQTT message:
     
-    - instruction topic: rwth-ssrdp/route-planning/command
+        - instruction topic: rwth-ssrdp/route-planning/command
 
         Drive, Stop, TurnL90, TurnR90, Turn180, CheckDistance
     
-    - feedback topic: rwth-ssrdp/route-planning/result
-    - obstacle distance: rwth-ssrdp/route-planning/obstacle
-    - alive: rwth-ssrdp/route-planning/heartbeat
+        - feedback topic: rwth-ssrdp/route-planning/result
+        - obstacle distance: rwth-ssrdp/route-planning/obstacle
+        - alive: rwth-ssrdp/route-planning/heartbeat
+    1. Implement CloudExecutor for mbot2 (CyberPi)
+    1. Integrate Test with mBot.
 
 
 
