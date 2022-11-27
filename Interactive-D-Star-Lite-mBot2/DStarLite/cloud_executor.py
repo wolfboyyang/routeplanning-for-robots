@@ -61,23 +61,12 @@ class CloudExecutor(ScreenExecutor):
     # Return False with error message if connection
     # cannot be  established
     def connect_real_robot(self):
-        return True, ''
-        # try:
-            # print('Connecting EV3 robot')
-            # self.ev3 = tmtcCom.TMTCpi2EV3(self.serialPort, self.mailboxName)
-            # print('Bluetooth device is present: ' + self.serialPort)
-            # ack, result = self.ev3.sendTC('Heartbeat', False)
-            # print(ack, result)
-            # if not ack:
-            #    print('Heartbeat was not acknowledged. Start program on EV3!')
-            #    return False, 'Heartbeat was not acknowledged. Start program on EV3!'
-            # else:
-            #    print("Heartbeat acknowledged")
-            #    return True, "Heartbeat acknowledged"
-        # except:
-        #    print('\nConnection error during EV3 communication')
-        #    print('No device: ', self.serialPort)
-        #    return False, 'Robot connection error: No device: ' + self.serialPort
+        print('Connecting cloud robot')
+        return True, 'Heartbeat acknowledged'
+        # if self.robot.heartbeat is not None:
+        #    return True, 'Heartbeat acknowledged'
+        # else:
+        #    return False, 'Opus! Robot is not ready! Please check the status.'
 
     # Overwritten method of superclass.
     # Ask user if robot is put at initial vertex
@@ -94,9 +83,9 @@ class CloudExecutor(ScreenExecutor):
         # Return True if the last tele-command has been reported an obstacle
         # on the next vertex in view direction. If robot is driving then
         # stop it.
-        if self.robot.detectRealObstacle and self.lastCommand == 'Drive':
+        if self.detectRealObstacle and self.lastCommand == 'Drive':
             self.action_at_end()  # Stop robot: do not crash
-        return self.robot.detectRealObstacle
+        return self.detectRealObstacle
 
     # Overwritten method of superclass
     # Command robot with the next move action. This can be a turn or a
@@ -105,16 +94,12 @@ class CloudExecutor(ScreenExecutor):
     # Return additionally the telemetry from the robot
     def command_robot(self, orientation):
         command = self.direction_dict[self.actualOrientation][orientation]
-        self.robot.send(command)
-        print('Commanding EV3:', command)
-        # Send a tele-command, await telemetry and wait for max. 12 seconds
-        # ack, reply = self.ev3.0.0
-        # sendTC(command, True, 12)
-        # self.lastCommand = command
+        print('Commanding robot:', command)
+        reply = self.robot.send(command)
+        self.lastCommand = command
         # If telemetry contains a ! at end then an obstacle is ahead.
-        # self.detectRealObstacle = reply[len(reply) - 1] == '!'
-        # return ack, reply
-        return True, ''
+        ack = reply == b'ok'
+        return ack, reply
 
     # Overwritten method of superclass
     # Check for obstacle at start location before robot starts to drive
@@ -123,29 +108,22 @@ class CloudExecutor(ScreenExecutor):
     # Return additionally the telemetry from the robot
     def obstacle_start_check(self):
         print('Commanding EV3: CheckDistance')
-        # ack, reply = self.ev3.sendTC('CheckDistance', True, 12)
-        # print(ack, reply)
+        reply = self.robot.send('CheckDistance')
         self.lastCommand = 'CheckDistance'
         # If telemetry contains a ! at end then an obstacle is ahead.
-        # self.detectRealObstacle = reply[len(reply) - 1] == '!'
-        # return ack, reply
-        return self.robot.detectRealObstacle, ''
-
-        # Overwritten method of superclass
+        ack = reply == b'ok'
+        return ack, reply
 
     # Robot drives to the goal and must be stopped when
     # it is totally on the goal vertex or a new obstacle appeared.
     # Return True, if command was executed without error
     # Return additionally the telemetry from the robot
     def action_at_end(self):
-        print('Commanding EV3: Stop')
-        # ack, reply = self.ev3.sendTC('Stop', True, 12)
+        print('Commanding robot: Stop')
+        reply = self.robot.send('Stop')
         self.lastCommand = 'Stop'
-        # return ack, reply
-        return True, ''
-
-        # Overwritten method of superclass
+        return True, reply
 
     # No delay needed here
     def delay(self):
-        time.sleep(self.stepDelay)
+        pass

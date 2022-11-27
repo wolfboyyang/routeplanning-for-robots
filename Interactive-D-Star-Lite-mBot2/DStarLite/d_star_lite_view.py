@@ -229,7 +229,7 @@ class DStarLiteView(object):
         else:  # no rectangle clicked
             return False, 0, 0, current
 
-    # Handle the click-event in the canvas if appState is inDesing or inExecution
+    # Handle the click-event in the canvas if appState is in Designing or Execution
     def canvas_clicked(self, event):
         print("clicked at", event.x, event.y)
         if (self.appState == AppState.inDesign or self.appState == AppState.inExecution) and \
