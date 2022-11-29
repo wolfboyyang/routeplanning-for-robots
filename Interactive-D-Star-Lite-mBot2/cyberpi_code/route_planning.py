@@ -21,6 +21,9 @@ except ImportError:
     from umqtt.simple import MQTTClient
 # endregion
 
+ssid = "SSID"
+password = "password"
+
 mqtt_host = "broker.hivemq.com"
 mqtt_port = 1883
 
@@ -36,15 +39,18 @@ topic_result = "rwth-ssrdp/route-planning/result"
 mqtt_client = MQTTClient(client_id, mqtt_host, port=mqtt_port, keepalive=600, ssl=False)
 
 one_step_distance = 20
-turn_distance = 4
+
+network_available = False
+battery = 0
+heartbeat_count = 0
 
 
 # Connect to the MQTT server
 def on_mqtt_connect():
     display('Connecting to MQTT')
-    mqtt_client.connect(clean_session=True)
-    time.sleep(3)
-    display('Connected to MQTT')
+    result = mqtt_client.connect(clean_session=True)
+    if result:
+        display('Connected to MQTT')
 
 
 # publish a message
@@ -54,6 +60,7 @@ def report(result):
 
 def report_heartbeat(count):
     mqtt_client.publish(topic_heartbeat, str(count), retain=False, qos=1)
+    display_at_bottom(count)
 
 
 def report_obstacle(distance):
@@ -77,11 +84,6 @@ def check_distance():
     distance = mbuild.ultrasonic2.get(1)
     report_obstacle(distance)
     return distance >= one_step_distance
-
-
-def check_turn():
-    distance = mbuild.ultrasonic2.get(1)
-    return distance >= turn_distance
 
 
 def process_command(command):
@@ -126,37 +128,74 @@ def process_command(command):
         report('ok')
 
 
-def display(label, align="center", index=0):
-    cyberpi.display.show_label(label, 16, align, index)
+def display(label):
+    cyberpi.display.show_label(label, 16, "center", index=0)
+
+
+def display_at_bottom(label):
+    cyberpi.display.show_label(label, 16, "bottom_mid", index=1)
+
+
+def display_at_top(label):
+    cyberpi.display.show_label(label, 16, "top_mid", index=2)
+
+
+def display_at_top_right(label):
+    cyberpi.display.show_label(label, 16, "top_right", index=3)
+
+
+def display_battery():
+    global battery
+    current_battery = cyberpi.get_battery()
+    if current_battery != battery:
+        battery = current_battery
+        display_at_top_right(battery)
+
+
+def check_network():
+    global network_available
+    global heartbeat_count
+    if cyberpi.wifi.is_connected():
+        if not network_available:
+            cyberpi.led.show('green black black black green')
+            on_mqtt_connect()
+            subscribe_topic_command()
+            network_available = True
+            display('WiFi connected')
+        heartbeat_count += 1
+    else:
+        if network_available:
+            cyberpi.led.show('red black black black red')
+            display('Connecting to WiFi')
+            cyberpi.wifi.connect(ssid, password)
+            network_available = False
 
 
 @event.start
 def on_start():
-    count = 0
-    mqtt_connected = False
+    display_battery()
+    cyberpi.led.show('red black black black red')
+    check_network()
 
-    while True:
-        if cyberpi.wifi.is_connected():
-            cyberpi.led.show('green black black black green')
-            if not mqtt_connected:
-                on_mqtt_connect()
-                mqtt_connected = True
-                subscribe_topic_command()
-                time.sleep(2)
-            else:
-                count = count + 1
-                report_heartbeat(count)
-                display(count, align="bottom_mid", index=1)
-                time.sleep(5)
-        else:
-            cyberpi.led.show('red black black black red')
-            display('Connecting to WiFi')
-            cyberpi.wifi.connect('SSID', 'password')
-            time.sleep(2)
+
+@event.is_press('a')
+def is_btn_a_press():
+    cyberpi.restart()
 
 
 @event.is_press('b')
-def is_btn_press():
+def is_btn_b_press():
     distance = mbuild.ultrasonic2.get(1)
-    cyberpi.display.show_label('Obstacle ' + str(distance), 16, "top_mid", index=2)
+    display_at_top('Obstacle ' + str(distance))
     report_obstacle(distance)
+
+
+@event.greater_than(5, "timer")
+def check_health():
+    global heartbeat_count
+    display_battery()
+    check_network()
+    if network_available:
+        report_heartbeat(heartbeat_count)
+    heartbeat_count += 1
+    cyberpi.timer.reset()

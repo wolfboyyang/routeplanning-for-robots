@@ -44,7 +44,6 @@ class MQTTService:
 
     def send(self, command):
         (rc, mid) = self.client.publish(topic_command, command, qos=1)
-        print('rc:', rc, mid)
         result = self.result.get()
         print('result: ', result)
         return result
