@@ -104,6 +104,13 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     1. Implement CloudExecutor for mbot2 (CyberPi)
     1. Integrate Test with mBot.
 
+        - Route planning for test
+            <img src="images/test_route_planning.webp" width="240">
+        - Route replaning due to obstacle
+            <img src="images/test_route_replanning.webp" width="240">
+        - mbot2 moving video
+        <video src="images/test_route_replanning.mp4" width="240">
+
 
 
 ## Brief information
