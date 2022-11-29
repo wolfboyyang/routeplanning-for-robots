@@ -83,9 +83,9 @@ class CloudExecutor(ScreenExecutor):
         # Return True if the last tele-command has been reported an obstacle
         # on the next vertex in view direction. If robot is driving then
         # stop it.
-        if self.detectRealObstacle and self.lastCommand == 'Drive':
+        if self.robot.detectRealObstacle and self.lastCommand == 'Drive':
             self.action_at_end()  # Stop robot: do not crash
-        return self.detectRealObstacle
+        return self.robot.detectRealObstacle
 
     # Overwritten method of superclass
     # Command robot with the next move action. This can be a turn or a
@@ -107,7 +107,7 @@ class CloudExecutor(ScreenExecutor):
     # Return True, if command was executed without error
     # Return additionally the telemetry from the robot
     def obstacle_start_check(self):
-        print('Commanding EV3: CheckDistance')
+        print('Commanding robot: CheckDistance')
         reply = self.robot.send('CheckDistance')
         self.lastCommand = 'CheckDistance'
         # If telemetry contains a ! at end then an obstacle is ahead.
