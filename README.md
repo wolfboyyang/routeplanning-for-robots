@@ -96,7 +96,7 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     
         - instruction topic: rwth-ssrdp/route-planning/command
 
-        Drive, Stop, TurnL90, TurnR90, Turn180, CheckDistance
+                Drive, Stop, TurnL90, TurnR90, Turn180, CheckDistance
     
         - feedback topic: rwth-ssrdp/route-planning/result
         - obstacle distance: rwth-ssrdp/route-planning/obstacle
@@ -105,11 +105,12 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
     1. Integrate Test with mBot.
 
         - Route planning for test
+
             <img src="images/test_route_planning.webp" width="240">
         - Route replaning due to obstacle
+
             <img src="images/test_route_replanning.webp" width="240">
-        - mbot2 moving video
-        <video src="images/test_route_replanning.mp4" width="240">
+        - [mbot2 moving video](https://gitlab.com/w-yang-de/routeplanning-for-robots/-/raw/main/images/test_route_planning.mp4)
 
 
 
