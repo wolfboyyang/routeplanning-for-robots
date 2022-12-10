@@ -9,6 +9,8 @@ Autonomous robots move through industrial halls on Earth and on the surface of d
 
 - Code Repo: [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
 
+- Try:[Fly.io WebApp](https://dstarlite.fly.dev/)
+
 <s>In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.</s>
 
 As Botley's main board is more complex than I expected, I decided to change to [mBot2/mBot Neo](https://amzn.eu/d/05GBACH), which is controlled by esp32 board, and could be programmed with python/micropython.
@@ -121,6 +123,7 @@ As Botley's main board is more complex than I expected, I decided to change to [
 
 - week 48 (07.11.2022 - 14.12.2022):
     1. Test & Refine the flet UI
+    1. Create & Build [Fly.io App](https://dstarlite.fly.dev/). See [flet doc: deploying web fly-io](https://flet.dev/docs/guides/python/deploying-web-app/fly-io).
     1. TODO: Calibration for turning & driving
     1. TODO: Prepare for mid-colloquium
     1. TODO: AR prototype
