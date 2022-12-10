@@ -16,7 +16,6 @@ import time
 
 from priority_queue import PriorityQueue
 from screen_executor import ScreenExecutor
-# Windows or on Raspbian (Linux)
 from vertex import Vertex
 from cloud_executor import CloudExecutor
 

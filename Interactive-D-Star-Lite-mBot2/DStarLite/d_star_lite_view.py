@@ -12,10 +12,6 @@
 ###########################################################
 
 import enum
-
-# from tkinter import *
-# from tkinter import messagebox
-# from tkinter import ttk
 import flet as ft
 from math import pi
 from d_star_lite_planner import *
