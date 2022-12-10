@@ -9,14 +9,17 @@ Autonomous robots move through industrial halls on Earth and on the surface of d
 
 - Code Repo: [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
 
-In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.
+<s>In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.</s>
+
+As Botley's main board is more complex than I expected, I decided to change to [mBot2/mBot Neo](https://amzn.eu/d/05GBACH), which is controlled by esp32 board, and could be programmed with python/micropython.
 
 # Steps: 
 - [x] Analyze Botley 2.0 controller & sensors
 - [x] Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
-- [x] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal.
-- [x] Adjust the routeplaning program for the new robot.
-- [ ] Try [Snap4Arduino](https://snap4arduino.rocks/)
+- [x] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal. 
+- [x] Adjust the routeplaning program for mbot2.
+- [x] Refactor the GUI from tkinter to flet to get famaliar with the code.
+- [ ] AR Feature Prototype.
 
 # Progress
 - week 41 (12.10.2022 - 18.10.2022): Find interesting project
@@ -176,8 +179,6 @@ Path planning now has the task of planning the shortest possible path between th
 <img src="images/system_structures.webp" width="480">
 
 ## Interactive D*Lite
-
-## Bluetooth interface
 
 ## Programming
 
