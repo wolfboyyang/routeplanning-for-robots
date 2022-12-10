@@ -33,7 +33,7 @@ class DStarLitePlanner(object):
         self.height = grid_height
         self.directNeighbors = direct_neighbors  # false=8, true=4
         self.vertexGrid = [[Vertex(x, y) for y in range(grid_height)] for x in range(grid_width)]
-        print("Creating vertex grid with height:", grid_height, "and width:", grid_width, "\n")
+        print(f'Creating vertex grid with height: {grid_height} and width:{grid_width} \n')
         self.startCoordinates = [float('inf'), float('inf')]
         self.goalCoordinates = [float('inf'), float('inf')]
         self.obstacles = set()
@@ -50,7 +50,7 @@ class DStarLitePlanner(object):
 
     def set_start_coordinates(self, x=0, y=0):
         self.startCoordinates = [int(x), int(y)]
-        print("  New start coordinates:", self.startCoordinates)
+        print('  New start coordinates:', self.startCoordinates)
 
     def get_start_coordinates(self):
         return self.startCoordinates
@@ -58,11 +58,11 @@ class DStarLitePlanner(object):
     def set_goal_coordinates(self, x=0, y=0):
         if self.goalCoordinates[0] != float('inf'):
             # Old goal-node
-            vertex = self.vertexGrid[self.goalCoordinates[0]][self.goalCoordinates[1]]
+            vertex = self.vertexGrid[int(self.goalCoordinates[0])][int(self.goalCoordinates[1])]
             vertex.set_is_goal(False)
-        self.goalCoordinates = [int(x), int(y)]
+        self.goalCoordinates = [x, y]
         self.vertexGrid[self.goalCoordinates[0]][self.goalCoordinates[1]].set_is_goal(True)
-        print("  New goal coordinates:", self.goalCoordinates)
+        print('  New goal coordinates:', self.goalCoordinates)
 
     def get_goal_coordinates(self):
         return self.goalCoordinates
@@ -77,7 +77,7 @@ class DStarLitePlanner(object):
             self.executor = ScreenExecutor(self.view, self)
             result = self.executor.execute_plan()
             return result
-        # TODO: implement for mbot2
+        # communicate with robot via MQTT
         elif exec_mode_str == 'Cloud Control':
             self.executor = CloudExecutor(self.view, self)
             result = self.executor.execute_plan()
@@ -85,11 +85,11 @@ class DStarLitePlanner(object):
 
     # #### D* Lite Algorithm #############################################################
 
-    # Initialize the planning process. Function implements the "Initialize" procedure
+    # Initialize the planning process. Function implements the 'Initialize' procedure
     # of the D*Lite algorithm.
     def initialize_planning(self):
         print('Initialize planning:')
-        self.goalNode = self.vertexGrid[self.goalCoordinates[0]][self.goalCoordinates[1]]
+        self.goalNode = self.vertexGrid[int(self.goalCoordinates[0])][int(self.goalCoordinates[1])]
         self.k = 0.0
         # All vertices have been already initialized with inf-value in vertex.py.
         # Also, the goal node's rsh value is already initialized with 0 in the interactive view
@@ -102,7 +102,7 @@ class DStarLitePlanner(object):
 
     # Function implements the ComputeShortestPath function of the D*Lite algorithm
     def compute_shortest_path(self):
-        print("\nComputing shortest path")
+        print('\nComputing shortest path')
         self.plan_steps = 0  # counts loops of while-statement
         while (self.priorityQueue.top_key() < self.startNode.calculate_key(self.startNode, self.k, self.hIsZero,
                                                                            self.directNeighbors)) or \
@@ -110,11 +110,11 @@ class DStarLitePlanner(object):
             k_old = self.priorityQueue.top_key()
             u = self.priorityQueue.pop()
             if u not in self.obstacles:
-                self.update_vertex_color(u, "white")
+                self.update_vertex_color(u, 'green')
             k = u.calculate_key(self.startNode, self.k, self.hIsZero, self.directNeighbors)
             if k_old < k:
                 self.priorityQueue.insert(u, k)
-                self.update_vertex_color(u, "yellow")
+                self.update_vertex_color(u, 'orange')
             elif u.g > u.rsh:
                 u.g = u.rsh
                 self.view.update_g(u.x, u.y)
@@ -131,12 +131,12 @@ class DStarLitePlanner(object):
             # Interactive behavior:
             if self.stepDelay > 0:
                 time.sleep(self.stepDelay)
-                self.view.master.update()
+                self.view.page.update()
             elif self.stepDelay < 0:
                 self.view.show('Press ok for next step')
 
     # Main planning function of the D* Lite algorithm
-    def main_planning(self, planning_mode="Run to result"):
+    def main_planning(self, planning_mode='Run to result'):
         print('\nStart planning using mode:', planning_mode)
         if planning_mode == 'Slow step':
             self.stepDelay = 2  # 2s delay
@@ -147,7 +147,7 @@ class DStarLitePlanner(object):
         self.planReady = False
         start_time = time.time()
         # Start the planning algorithm
-        self.startNode = self.vertexGrid[self.startCoordinates[0]][self.startCoordinates[1]]
+        self.startNode = self.vertexGrid[int(self.startCoordinates[0])][int(self.startCoordinates[1])]
         self.lastNode = self.startNode
         self.initialize_planning()
         self.compute_shortest_path()
@@ -175,34 +175,34 @@ class DStarLitePlanner(object):
               abs(from_vertex.y - to_vertex.y) == 1):
             return 1.4  # diagonal move
         else:
-            raise Exception("NeighborCost: Vertex is not a neighbor")
+            raise Exception('NeighborCost: Vertex is not a neighbor')
 
     # Calculate neighbors of a vertex depending on the
     # maximum count (4 or 8). Return neighbor vertices.
-    def neighbors(self, a_vertex):
+    def neighbors(self, vertex):
         result = []
-        if not self.view.directNeighbors.get():  # 8 neighbors
-            for x in range(a_vertex.x - 1, a_vertex.x + 2):
-                for y in range(a_vertex.y - 1, a_vertex.y + 2):
+        if not self.directNeighbors:  # 8 neighbors
+            for x in range(vertex.x - 1, vertex.x + 2):
+                for y in range(vertex.y - 1, vertex.y + 2):
                     if x in range(self.width) and \
                             y in range(self.height) and \
-                            not (x == a_vertex.x and y == a_vertex.y):
+                            not (x == vertex.x and y == vertex.y):
                         result.append(self.vertexGrid[x][y])
         else:  # 4 neighbors
-            if a_vertex.x - 1 >= 0:
-                result.append(self.vertexGrid[a_vertex.x - 1][a_vertex.y])
-            if a_vertex.x + 1 < self.width:
-                result.append(self.vertexGrid[a_vertex.x + 1][a_vertex.y])
-            if a_vertex.y - 1 >= 0:
-                result.append(self.vertexGrid[a_vertex.x][a_vertex.y - 1])
-            if a_vertex.y + 1 < self.height:
-                result.append(self.vertexGrid[a_vertex.x][a_vertex.y + 1])
+            if vertex.x - 1 >= 0:
+                result.append(self.vertexGrid[vertex.x - 1][vertex.y])
+            if vertex.x + 1 < self.width:
+                result.append(self.vertexGrid[vertex.x + 1][vertex.y])
+            if vertex.y - 1 >= 0:
+                result.append(self.vertexGrid[vertex.x][vertex.y - 1])
+            if vertex.y + 1 < self.height:
+                result.append(self.vertexGrid[vertex.x][vertex.y + 1])
         return result
 
     # Calculate the neighbor with the smallest sum of g and rsh-value.
     # Used after planning for finding the cheapest path.
-    def calc_cheapest_neighbor(self, a_vertex):
-        neighbors = self.neighbors(a_vertex)
+    def calc_cheapest_neighbor(self, vertex):
+        neighbors = self.neighbors(vertex)
         cheapest = neighbors[0]
         for i in range(1, len(neighbors)):
             if (cheapest.g + cheapest.rsh) > (neighbors[i].g + neighbors[i].rsh):
@@ -211,27 +211,27 @@ class DStarLitePlanner(object):
 
     # Function implements the UpdateVertex procedure of the D*Lite algorithm
     # Only calls for update on screen are added
-    def update_vertex(self, a_vertex):
-        print('Update vertex', a_vertex.x, a_vertex.y)
-        if a_vertex != self.goalNode:
+    def update_vertex(self, vertex):
+        print('Update vertex', vertex.x, vertex.y)
+        if vertex != self.goalNode:
             # Calculate new rsh(aVertex)
-            all_neighbors = self.neighbors(a_vertex)
+            all_neighbors = self.neighbors(vertex)
             values = []
             for s in all_neighbors:
-                value = self.neighbor_cost(a_vertex, s) + s.g
+                value = self.neighbor_cost(vertex, s) + s.g
                 values.append(value)
             sorted_values = sorted(values)
-            a_vertex.rsh = sorted_values[0]
+            vertex.rsh = sorted_values[0]
             # Update rsh-value on screen
-            self.view.update_rsh(a_vertex.x, a_vertex.y)
-        if a_vertex in self.priorityQueue:
-            self.priorityQueue.remove(a_vertex)
-            print('Removed', a_vertex.x, a_vertex.y)
-        if a_vertex.g != a_vertex.rsh:
-            key = a_vertex.calculate_key(self.startNode, self.k, self.hIsZero, self.directNeighbors)
-            self.priorityQueue.insert(a_vertex, key)
-            print(a_vertex.x, a_vertex.y, 'added to priorityQueue')
-            self.update_vertex_color(a_vertex, "yellow")
+            self.view.update_rsh(vertex.x, vertex.y)
+        if vertex in self.priorityQueue:
+            self.priorityQueue.remove(vertex)
+            print('Removed', vertex.x, vertex.y)
+        if vertex.g != vertex.rsh:
+            key = vertex.calculate_key(self.startNode, self.k, self.hIsZero, self.directNeighbors)
+            self.priorityQueue.insert(vertex, key)
+            print(vertex.x, vertex.y, 'added to priorityQueue')
+            self.update_vertex_color(vertex, 'red')
 
     # Show the planned path on the view and remember the path
     # for execution.
@@ -242,7 +242,7 @@ class DStarLitePlanner(object):
             self.actualPath.append(node)
             node = self.calc_cheapest_neighbor(node)
             if node != self.goalNode and not node.isObstacle:
-                self.view.update_color(node, 'light blue')
+                self.view.update_color(node, 'lightblue')
             self.planReady = node.g != float('inf')
         if self.planReady:
             self.actualPath.append(self.goalNode)
@@ -253,13 +253,13 @@ class DStarLitePlanner(object):
         node = self.actualPath[i]
         while node != self.goalNode:
             if node not in self.obstacles:
-                self.view.update_color(node, 'white')
+                self.view.update_color(node, 'green')
             i += 1
             node = self.actualPath[i]
 
-    def update_vertex_color(self, a_vertex, a_color):
-        if not a_vertex == self.startNode and not a_vertex == self.goalNode:
-            self.view.update_color(a_vertex, a_color)
+    def update_vertex_color(self, vertex, color):
+        if not vertex == self.startNode and not vertex == self.goalNode:
+            self.view.update_color(vertex, color)
 
     # New obstacle on planned path during plan execution has been found. 
     # Re-plan the path to goal

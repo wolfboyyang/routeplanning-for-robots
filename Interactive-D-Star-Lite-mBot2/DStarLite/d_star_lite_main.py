@@ -15,12 +15,10 @@ from d_star_lite_view import *
 
 
 # Create a start main application window
-def main():
-    print("\nStarting D*Lite Application 1.0")
-    root = Tk()
-    DStarLiteView(root)
-    root.mainloop()
+def main(page: ft.Page):
+    print('\nStarting D*Lite Application 1.0')
+    DStarLiteView(page)
 
 
 if __name__ == '__main__':
-    main()
+    ft.app(port=8550, host='0.0.0.0', target=main)
