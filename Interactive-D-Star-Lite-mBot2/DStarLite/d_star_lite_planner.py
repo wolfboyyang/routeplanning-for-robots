@@ -226,11 +226,11 @@ class DStarLitePlanner(object):
         if vertex in self.priorityQueue:
             self.priorityQueue.remove(vertex)
             print('Removed', vertex.x, vertex.y)
-        if vertex.g != vertex.rsh:
+        if vertex.g != vertex.rsh and not vertex.isObstacle:  # obstacle could not pass
             key = vertex.calculate_key(self.startNode, self.k, self.hIsZero, self.directNeighbors)
             self.priorityQueue.insert(vertex, key)
             print(vertex.x, vertex.y, 'added to priorityQueue')
-            self.update_vertex_color(vertex, 'red')
+            self.update_vertex_color(vertex, 'orange')
 
     # Show the planned path on the view and remember the path
     # for execution.

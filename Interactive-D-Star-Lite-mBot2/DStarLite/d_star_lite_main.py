@@ -16,7 +16,8 @@ from d_star_lite_view import *
 
 # Create a start main application window
 def main(page: ft.Page):
-    print('\nStarting D*Lite Application 1.0')
+    print('\nStarting D*Lite Application 2.0')
+    print('page size:', page.width, page.height)
     DStarLiteView(page)
 
 

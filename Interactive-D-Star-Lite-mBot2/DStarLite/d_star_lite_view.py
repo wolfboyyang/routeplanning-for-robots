@@ -52,21 +52,21 @@ class DStarLiteView:
         self.stepX = None
         self.planner = None
         self.page = page
-        page.window_width = 819
-        page.window_height = 800
-        page.window_resizable = False
         page.title = 'Interactive D* Lite 2.0'
         self.appState = AppState.inDesign
 
         # Default planning grid size
         self.gridHeight = 4
         self.gridWidth = 5
-        self.canvas_width = 800
-        self.canvas_height = 580
+
         self.grid_width = ft.Ref[ft.Dropdown]()
         self.grid_height = ft.Ref[ft.Dropdown]()
         self.design_tab = ft.Ref[ft.Tab]()
 
+        self.page.on_resize = self.page_resize
+
+        self.canvas_width = self.page.width - 20
+        self.canvas_height = self.page.height - 190
         self.grid_cell_width = self.canvas_width / self.gridWidth
         self.grid_cell_height = self.canvas_height / self.gridHeight
 
@@ -243,21 +243,21 @@ class DStarLiteView:
         # Row = 2 the grid
         self.grid = self.create_grid()
         self.robot = self.create_robot()
-        self.canvas = ft.Ref[ft.Stack]()
+        self.canvas_stack = ft.Ref[ft.Stack]()
 
-        canvas = ft.Container(
+        self.canvas = ft.Container(
             content=ft.Stack(
                 [
                     self.grid,
                     self.robot,
                 ],
-                ref=self.canvas,
+                ref=self.canvas_stack,
             ),
             margin=0,
             padding=0,
             alignment=ft.alignment.bottom_center,
             bgcolor=ft.colors.WHITE,
-            height=580,
+            height=self.canvas_height,
         )
 
         def close_dlg(_):
@@ -292,7 +292,7 @@ class DStarLiteView:
         )
         page.dialog = self.dialog
 
-        page.add(ft.Column(spacing=0, controls=[tabs, canvas]))
+        page.add(ft.Column(spacing=0, controls=[tabs, self.canvas]))
 
         self.set_default_start_goal()
 
@@ -335,6 +335,11 @@ class DStarLiteView:
 
         def update_color(self, color):
             self.content.bgcolor = color
+            self.update()
+
+        def update_size(self, width, height):
+            self.content.width = width
+            self.content.height = height
             self.update()
 
         def change_type(self, cell_type):
@@ -387,6 +392,9 @@ class DStarLiteView:
 
         def update_color(self, color):
             self.content.update_color(color)
+
+        def update_size(self, width, height):
+            self.content.update_size(width, height)
 
         def change_type(self, cell_type):
             match cell_type:
@@ -467,8 +475,8 @@ class DStarLiteView:
         self.show_planning_hint('-')
         self.show_robot(False)
         self.grid = self.create_grid()
-        self.canvas.current.controls[0] = self.grid
-        self.canvas.current.update()
+        self.canvas_stack.current.controls[0] = self.grid
+        self.canvas_stack.current.update()
         self.set_default_start_goal()
         self.h0_check.current.disabled = False
         self.direct_neighbors.current.disabled = False
@@ -608,7 +616,20 @@ class DStarLiteView:
 
     def show_robot(self, visible):
         self.robot.visible = visible
-        self.canvas.current.update()
+        self.canvas_stack.current.update()
+
+    def page_resize(self, _):
+        self.canvas_width = self.page.width - 20
+        self.canvas_height = self.page.height - 190
+        self.grid_cell_width = self.canvas_width / self.gridWidth
+        self.grid_cell_height = self.canvas_height / self.gridHeight
+
+        for rows in self.grid.controls:
+            for cell in rows.controls:
+                cell.update_size(self.grid_cell_width, self.grid_cell_height)
+
+        self.canvas.height = self.canvas_height
+        self.canvas.update()
 
     # Print function for test purpose
     def dump_vertices(self):
