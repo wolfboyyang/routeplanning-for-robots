@@ -12,8 +12,9 @@
 ###########################################################
 
 import enum
-import flet as ft
 from math import pi
+from queue import Queue
+import flet as ft
 from d_star_lite_planner import *
 
 
@@ -69,6 +70,8 @@ class DStarLiteView:
         self.canvas_height = self.page.height - 190
         self.grid_cell_width = self.canvas_width / self.gridWidth
         self.grid_cell_height = self.canvas_height / self.gridHeight
+
+        self.confirm = Queue(1)
 
         def update_grid_width(e):
             self.gridWidth = int(e.control.value)
@@ -262,6 +265,7 @@ class DStarLiteView:
 
         def close_dlg(_):
             self.dialog.open = False
+            self.confirm.put('ok')
             self.page.update()
 
         self.dialog_icon = ft.Ref[ft.Icon]()
@@ -471,6 +475,8 @@ class DStarLiteView:
 
     # Button 'Recreate' has been clicked. 
     def btn_recreate_clicked(self, _):
+        if self.appState == AppState.inPlanning or self.appState == AppState.inExecution:
+            return
         # Recreate the planning grid including all variables
         self.show_planning_hint('-')
         self.show_robot(False)
@@ -490,6 +496,7 @@ class DStarLiteView:
             return
         self.design_tab.current.content.disabled = True
         self.execution_tab.current.content.disabled = True
+        self.update()
         # Check business rules
         if self.planner.are_start_and_goal_set():
             self.planner.hIsZero = self.h0_check.current.value
@@ -515,16 +522,18 @@ class DStarLiteView:
             self.appState = AppState.inDesign
         self.design_tab.current.content.disabled = False
         self.execution_tab.current.content.disabled = False
+        self.update()
 
     # Button 'Execute' has been clicked
     def btn_exec_clicked(self, _):
         # Check business rules
         if not self.planner.planReady:
             self.show('Hint', 'No plan present. Goto design and planning tab.')
-        else:
+        elif self.appState != AppState.inExecution:  # avoid click when still execution
             self.appState = AppState.inExecution
             self.design_tab.current.content.disabled = True
             self.planning_tab.current.content.disabled = True
+            self.update()
             result = self.planner.execute_plan(self.execution_mode.current.value)
             if result[0]:
                 self.show('Hint', 'Plan has been executed!')
@@ -535,6 +544,7 @@ class DStarLiteView:
             self.show_planning_hint('-')
             self.design_tab.current.content.disabled = False
             self.planning_tab.current.content.disabled = False
+            self.update()
 
     def show(self, title, message, warning=False):
         self.dialog_title = title
@@ -542,6 +552,7 @@ class DStarLiteView:
         self.dialog_text.current.value = message
         self.dialog.open = True
         self.page.update()
+        self.confirm.get()
 
     def show_planning_hint(self, message):
         self.planning_hint.current.value = message
@@ -606,7 +617,6 @@ class DStarLiteView:
         self.page.update()
 
     def move(self, x, y, orientation):
-        print('move robot:', x, y, orientation, Orientation[orientation])
         offset_x = (x + 0.5) * self.grid_cell_width
         offset_y = (y + 0.5) * self.grid_cell_height
         angle = Orientation[orientation].value

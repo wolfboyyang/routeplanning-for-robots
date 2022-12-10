@@ -34,6 +34,7 @@ class CloudExecutor(ScreenExecutor):
 
         self.robot = MQTTService()
 
+
     # Initialize the dictionaries for the robot commands depending
     # on the current orientation North, East, South or West
     def init_command_dict(self):
@@ -72,9 +73,9 @@ class CloudExecutor(ScreenExecutor):
     # Ask user if robot is put at initial vertex
     # with initial orientation.
     def put_real_robot_at_init_pos(self):
-        self.view.show('Click OK if robot is located at vertex ' + str(self.planner.startNode.x) +
-                       '-' + str(self.planner.startNode.y) + ' with orientation ' +
-                       self.actualOrientation + '?')
+        self.view.show('Hint',
+                       f'Click OK if robot is located at vertex({self.planner.startNode.x} ,{self.planner.startNode.y})'
+                       f' with orientation {self.actualOrientation}?')
 
     # Overwritten method of superclass
     # Return if a real robot reports an obstacle ahead in driving direction

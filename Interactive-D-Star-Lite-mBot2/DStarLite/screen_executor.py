@@ -78,7 +78,6 @@ class ScreenExecutor(object):
                             result, reply = self.move_robot(next_vertex, self.actualOrientation)
                         self.delay()
                         step += 1
-            # self.view.canvas_grid.itemconfig(self.robotIconsIDs[self.actualOrientation], state='hidden')
             if not abort and result:
                 result, reply = self.action_at_end()
                 if result:
@@ -144,10 +143,10 @@ class ScreenExecutor(object):
         self.planner.startNode = self.planner.actualPath[0]
         self.actualOrientation = self.view.robotStartOrientation
         self.view.show_robot(False)
-        print(self.actualOrientation)
         result, reply = self.move_robot(self.planner.startNode, self.actualOrientation,
                                         command_robot=False)
         self.delay()
+        self.view.show_robot(True)
         self.put_real_robot_at_init_pos()
         next_orientation = self.calc_orientation(self.planner.startNode, self.planner.actualPath[1])
         if next_orientation != self.actualOrientation:
@@ -172,8 +171,7 @@ class ScreenExecutor(object):
     # robots. Ask user if robot is put at initial vertex
     # with initial orientation. 
     def put_real_robot_at_init_pos(self):
-        self.view.show_robot(True)
-        self.delay()
+        pass
 
     # Move robot to aVertex with an orientation
     # Move all polygons to aVertex, only that with given orientation
