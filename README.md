@@ -12,10 +12,10 @@ Autonomous robots move through industrial halls on Earth and on the surface of d
 In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.
 
 # Steps: 
-- [ ] Analyze Botley 2.0 controller & sensors
+- [x] Analyze Botley 2.0 controller & sensors
 - [x] Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
-- [ ] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal.
-- [ ] Adjust the routeplaning program for the new robot.
+- [x] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal.
+- [x] Adjust the routeplaning program for the new robot.
 - [ ] Try [Snap4Arduino](https://snap4arduino.rocks/)
 
 # Progress
@@ -112,6 +112,15 @@ In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/
             <img src="images/test_route_replanning.webp" width="240">
         - [mbot2 moving video](https://gitlab.com/w-yang-de/routeplanning-for-robots/-/raw/main/images/test_route_planning.mp4)
 
+- week 47 (30.11.2022 - 06.12.2022):
+    1. Learn & Test [Flet](https://flet.dev/): easily build realtime web, mobile and desktop apps in Python (as flutter app). No frontend experience required.
+    1. Rewrite Interactive-D-Star-Lite app (Tkinter) with flet to run on web/mobile
+
+- week 48 (07.11.2022 - 14.12.2022):
+    1. Test & Refine the flet UI
+    1. TODO: Calibration for turning & driving
+    1. TODO: Prepare for mid-colloquium
+    1. TODO: AR prototype
 
 
 ## Brief information
