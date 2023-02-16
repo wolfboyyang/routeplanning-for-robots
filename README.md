@@ -3,7 +3,7 @@
 
 Autonomous robots move through industrial halls on Earth and on the surface of distant planets without human intervention. A path planning algorithm calculates the shortest route to the desired destination. 
 
-- Original project: [Make Magazin 2021/1, Page 78.](make-magazin.de/xb4a) 
+- Original project: [Make Magazine 2021/1, Page 78.](https://make-magazin.de/xb4a) 
 
 - Article: [Pfadplanung für Roboter](https://www.heise.de/select/make/2021/1/2031114325889691579)
 
@@ -124,9 +124,31 @@ As Botley's main board is more complex than I expected, I decided to change to [
 - week 48 (07.11.2022 - 14.12.2022):
     1. Test & Refine the flet UI
     1. Create & Build [Fly.io App](https://dstarlite.fly.dev/). See [flet doc: deploying web fly-io](https://flet.dev/docs/guides/python/deploying-web-app/fly-io).
-    1. TODO: Calibration for turning & driving
-    1. TODO: Prepare for mid-colloquium
-    1. TODO: AR prototype
+    1. Calibration for turning & driving Concept: AR
+    1. Prepare for mid-colloquium
+    1. AR prototype: [AR Navigation](https://github.com/maxxfrazer/ARKit-SCNPath) + [AR Toy Racing Car](https://www.wikitude.com/blog-augmented-reality-toy-demo/)
+- week 49 (15.12.2022 - 21.12.2022): 
+    1. Fix Bug for network connection
+    1. DSS mid colloquium
+    1. RDP mid colloquium
+- week 50 (22.12.2022 - 02.01.2023): Chrismas & New Year Holidays
+- week 01 (03.01.2023 - 10.01.2023):
+    1. Vuforia Engine Model Tracking for mBot2
+- week 02 (11.01.2023 - 17.01.2023):
+    - Work on RDP
+- week 03 (18.01.2023 - 24.01.2023):
+    - Work on RDP
+- week 04 (24.01.2023 - 31.01.2023):
+    - Work on RDP final colloquium
+- week 05 (01.02.2023 - 07.02.2023):
+    - Work on RDP paper
+- week 06 (08.02.2023 - 14.02.2023):
+    - Work on RDP paper
+- week 07 (15.02.2023 - 21.02.2023):
+    - Prepare Poster for DSS
+- week 07 (22.01.2023 - 28.01.2023):
+    - TODO: Wrap-up
+
 
 
 ## Brief information
@@ -220,3 +242,4 @@ Path planning now has the task of planning the shortest possible path between th
 - [LEGO Robotics](https://github.com/LEGO-Robotics/LEGO-Robotics)
 - [Snap4Arduino](https://github.com/bromagosa/Snap4Arduino)
 - More on the subject, Detlef Heinze, [Pi controls Lego EV3, Make special issue Robotics 2019](https://www.heise.de/select/make/2019/7/1573929070378454)
+- 
