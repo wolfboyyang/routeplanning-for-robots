@@ -146,7 +146,10 @@ As Botley's main board is more complex than I expected, I decided to change to [
     - Work on RDP paper
 - week 07 (15.02.2023 - 21.02.2023):
     - Prepare Poster for DSS
-- week 07 (22.01.2023 - 28.01.2023):
+    - Add Control Logic Diagram
+- week 07 (22.02.2023 - 28.02.2023):
+    - Setup Vuforia Ground Sample Project
+    - TODO: Add AR Feature
     - TODO: Wrap-up
 
 
@@ -197,11 +200,11 @@ Some of the fields play a special role: Exactly one field is the starting field 
 Path planning now has the task of planning the shortest possible path between the start and finish field, bypassing the known obstacles. On the previous page, the planned path is marked in blue color between the start and destination field. The algorithm has earmarked the yellow fields for a possible rescheduling, but has not been treated definitively, as the shortest path runs in a different direction, as you will see later.
 ## Neighboring fields
 
-<img src="images/neighbour.webp" width="240">
+<img src="images/neighbour.webp" width="120">
 
-## System structure
+## System structure - Control Logic
 
-<img src="images/system_structures.webp" width="480">
+<img src="images/control_logic.webp" width="480">
 
 ## Interactive D*Lite
 
