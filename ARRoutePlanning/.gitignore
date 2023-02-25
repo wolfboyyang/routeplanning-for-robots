@@ -1,0 +1,9 @@
+/Library
+/Logs
+/obj
+/Temp
+/UserSettings
+/QCAR
+*.sln
+*.csproj
+*.tgz
