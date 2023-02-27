@@ -1,29 +1,53 @@
 # Routeplanning for robots
 <img src="images/logo.webp" width="480">
 
-Autonomous robots move through industrial halls on Earth and on the surface of distant planets without human intervention. A path planning algorithm calculates the shortest route to the desired destination. 
+## Introduction
+
+Autonomous robots move through industrial halls on Earth and on the surface of distant planets without human intervention. 
+
+This Project is inspired by Pfadplanung für Roboter, Make Magazine 2021/1, Page 78, https://make-magazin.de/xb4a, which implemented a D* Lite path planning algorithm to calculate the shortest route to the desired destination for LEGO® MINDSTORMS® EV3 robot. I’m trying to use mBot2 to demonstrate the D* Lite algorithm and make it possible to control from mobile and add AR visualization when time is permitted. mBot2 is controlled by Cyber Pi board (esp32) and could be programmed with MicroPython.
+
+Try in Browser: [Fly.io WebApp](https://dstarlite.fly.dev/)
+
+## Original Project Overview
 
 - Original project: [Make Magazine 2021/1, Page 78.](https://make-magazin.de/xb4a) 
 
 - Article: [Pfadplanung für Roboter](https://www.heise.de/select/make/2021/1/2031114325889691579)
 
-- Code Repo: [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
+- Original Code Repo: [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
 
-- Try:[Fly.io WebApp](https://dstarlite.fly.dev/)
+### Brief information
+- Understand and apply interactive path planning
+- Raspberry Pi/Mac/phone controls robots via Bluetooth
+- Programming with Python
+- Operating the path planning simulator
+
+### Checklist
+- Time required: 4 hours
+- Costs: 10 Euro (without robots)
+- Programming: Python on Linux, Windows or Mac
+
+### Material
+- Raspberry Pi from model 3B+ or higher (without camera)
+- MicroSD memory card with Raspbian Buster or Raspberry Pi OS Buster installed (both Python 3.7.3)
+- Lego EV3 kit 31313 or Botley 2.0 or any robots
+
+## Robot Selection
 
 <s>In this project, I'll use toy robot of my daugther,[Botley 2.0](https://amzn.eu/d/19yy9Va),a programing robot with 2.4 GHz remote controller. It has obstable-detection, but doesn't have bluetooth programming interface. I plan to use ESP32 boards to upgrade it so that it could be pragram with python/micropython.</s>
 
 As Botley's main board is more complex than I expected, I decided to change to [mBot2/mBot Neo](https://amzn.eu/d/05GBACH), which is controlled by esp32 board, and could be programmed with python/micropython.
 
-# Steps: 
+## Steps: 
 - [x] Analyze Botley 2.0 controller & sensors
 - [x] Confirm Materials & Tools. Buy ESP32 boards, additions sensors, battery
 - [x] Modify the hardwares and Test: try to control the motor with eps32 board, read motor speed & obstable signal. 
 - [x] Adjust the routeplaning program for mbot2.
 - [x] Refactor the GUI from tkinter to flet to get famaliar with the code.
-- [ ] AR Feature Prototype.
+- [ ] AR Visualization.
 
-# Progress
+## Development & Progress
 - week 41 (12.10.2022 - 18.10.2022): Find interesting project
     1. TonUINO
     2. Solar electricity for microcontroller
@@ -149,29 +173,31 @@ As Botley's main board is more complex than I expected, I decided to change to [
     - Add Control Logic Diagram
 - week 07 (22.02.2023 - 28.02.2023):
     - Setup Vuforia Ground Sample Project
-    - TODO: Add AR Feature
-    - TODO: Wrap-up
+    - MQTT Topic: setting
+        setting/design/generate (width,height)
+        setting/design/start (x,y)
+        setting/design/goal (x,y)
+        setting/design/obstacle (x,y)
+        setting/planning/h_is_0 [true, false]
+        setting/planning/direct_neighbour [true, false]
+        setting/planning/start [fast, slow, manual]
+        setting/execution/orientation [north, east, south, west]
+        setting/execution/execute [simulation, robot]
+    - TODO: Add AR Visualization
+    - Wrap-up
 
+## Original Project Mission
 
+<img src="images/mission.jpeg" width="480">
 
-## Brief information
-- Understand and apply interactive path planning
-- Raspberry Pi/Mac/phone controls robots via Bluetooth
-- Programming with Python
-- Operating the path planning simulator
+Our mission area (the terrace) is 10 fields wide and 7 fields high. Each individual field is 40cm × 40cm in size. The field size is based on the size of the robot plus a margin around the robot. The size of the mission area depends on the specific task. The operator, i.e. you, determines the size itself.
 
-## Checklist
-- Time required: 4 hours
-- Costs: 10 Euro (without robots)
-- Programming: Python on Linux, Windows or Mac
+Some of the fields play a special role: Exactly one field is the starting field (green), and exactly another field is the target field (red). The operator determines in the program which they are. In addition, the operator can mark fields as known obstacles (brown). The robot is not allowed to drive through this, as there is a risk of collision there. He has to drive around her. In the example, this is the area where the chairs and the table are on the terrace.
 
-## Material
-- Raspberry Pi from model 3B+ or higher (without camera)
-- MicroSD memory card with Raspbian Buster or Raspberry Pi OS Buster installed (both Python 3.7.3)
-- Lego EV3 kit 31313 or Botley 2.0 or any robots
+Path planning now has the task of planning the shortest possible path between the start and finish field, bypassing the known obstacles. On the previous page, the planned path is marked in blue color between the start and destination field. The algorithm has earmarked the yellow fields for a possible rescheduling, but has not been treated definitively, as the shortest path runs in a different direction, as you will see later.
 
+## Path planning Review (translated from Make Magazine)
 
-## Path planning translated from MakeMagazine
 Path planning algorithms are among the oldest algorithms of artificial intelligence. Most people know them from the navigation in the car or from the route planner on Google Maps. As early as 1959, the Dutch mathematician Edgar W. Dijkstra described an algorithm for path planning that can be used to calculate the shortest distance between two points in advance. In principle, you have places (nodes) through which you can drive, which are connected by edges (roads). The edges are assigned costs (length of the road). The braid from the edges connected by edges is also called graph.
 
 Based on the number of nodes, their connections via edges and the edge weights, the Dijkstra algorithm can iteratively determine the shortest path by program from a given starting node to a target node. However, he goes through all knots and edges relatively stubbornly.
@@ -189,16 +215,7 @@ Path planning: The terrace is divided into tiles.
 
 Table and chairs are the obstacles to be bypassed.
 
-## Mission
-
-<img src="images/mission.jpeg" width="480">
-
-Our mission area (the terrace) is 10 fields wide and 7 fields high. Each individual field is 40cm × 40cm in size. The field size is based on the size of the robot plus a margin around the robot. The size of the mission area depends on the specific task. The operator, i.e. you, determines the size itself.
-
-Some of the fields play a special role: Exactly one field is the starting field (green), and exactly another field is the target field (red). The operator determines in the program which they are. In addition, the operator can mark fields as known obstacles (brown). The robot is not allowed to drive through this, as there is a risk of collision there. He has to drive around her. In the example, this is the area where the chairs and the table are on the terrace.
-
-Path planning now has the task of planning the shortest possible path between the start and finish field, bypassing the known obstacles. On the previous page, the planned path is marked in blue color between the start and destination field. The algorithm has earmarked the yellow fields for a possible rescheduling, but has not been treated definitively, as the shortest path runs in a different direction, as you will see later.
-## Neighboring fields
+### Neighboring fields
 
 <img src="images/neighbour.webp" width="120">
 
@@ -206,43 +223,42 @@ Path planning now has the task of planning the shortest possible path between th
 
 <img src="images/control_logic.webp" width="480">
 
-## Interactive D*Lite
-
 ## Programming
-
-<img src="images/simulator.webp" width="480">
 
 1. Launch the Simulator
 
     ```
-        git clone https://github.com/robodhhb/Interactive-D-Star-Lite.git
-        cd Interactive-D-Star-Lite\20_Raspberry_Pi_project
+        git clone https://gitlab.com/w-yang-de/routeplanning-for-robots.git
+        cd Interactive-D-Star-Lite-mBot2/DStarLite
         conda create -n ssrdp python=3.10
         conda activate ssrdp
+        pip install -r requirements
         python DStarLiteMain.py
     ```
-1. In `Design` tab, Change the grid width & height, press `Generate Grid`, change `Click mode` to put Start/Goal point or set Obstales by clicking the map zone.
+    <img src="images/simulator.webp" width="480">
+
+1. In `Design` tab, Change the grid width & height, press `Generate Grid`, drag start(purple)/goal(black), click to add/remove obstacles.
 1. In `Planing` tab, change `Planning mode` Fast/Slow/Manual, click `Start Planning` to get a routine. `only direct neighbors` means only move up/down/left/right, otherwise the robot could move diagonally.
 1. In `Execution` tab, change `Robot start orientation` to match the robot, click `Execution plan` to see the simulation or send commands to robot.
 
 ## Robot programming
-    1. Overview
+1. install [mBlock](https://mblock.makeblock.com/en-us/), change wifi config (24: ssid/25: passwod) in Interactive-D-Star-Lite-mBot2/mbot2_cyberpi_code/route_planning.py and upload to mBot2(CyberPi)
 
-<img src="images/robot_program.webp" width="480">
+1. LEGO EV3 Program Overview
 
-    2. Main Logic - Text
+    <img src="images/robot_program.webp" width="480">
 
-<img src="images/robot_program_main.webp" width="480">
+1. LEGO EV3 Program Main Logic - Text
 
-## Installation and test
-
-## Expansion possibilities
-
-
+    <img src="images/robot_program_main.webp" width="480">
 
 # Referrences
+- Pfadplanung für Roboter, Make Magazine 2021/1, Page 78, https://make-magazin.de/xb4a
+- [robodhhb/Interactive-D-Star-Lite](https://github.com/robodhhb/Interactive-D-Star-Lite)
+- [Flet.dev](https://flet.dev/), The fastest way to build Flutter apps in Python, 
+- [Vuforia™ Engine Developer Library](https://library.vuforia.com/)
 - [Grid and Graph based Path Planning Methods](https://cw.fel.cvut.cz/old/_media/courses/b4m36uir/lectures/b4m36uir-lec04-handout.pdf)
 - [LEGO Robotics](https://github.com/LEGO-Robotics/LEGO-Robotics)
 - [Snap4Arduino](https://github.com/bromagosa/Snap4Arduino)
 - More on the subject, Detlef Heinze, [Pi controls Lego EV3, Make special issue Robotics 2019](https://www.heise.de/select/make/2019/7/1573929070378454)
-- 
+
